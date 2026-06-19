@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucerna × Summit Financial Wealth Advisors</title>
-<meta name="description" content="A 90-day video authority system, built specifically for Crestline Wealth Partners.">
+<meta name="description" content="A 90-day video authority system, built specifically for Summit Financial Wealth Advisors.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Anton&display=swap" rel="stylesheet">
@@ -112,15 +112,16 @@
 
   /* ===== portfolio ===== */
   .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
-  .pcard{position:relative;border:1px solid var(--ln2);background:var(--navy);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
+  .pcard{position:relative;border:1px solid var(--ln2);background:var(--navy);aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;
     overflow:hidden;text-decoration:none;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
   .pcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(61,123,255,.22),transparent 60%)}
   .pcard:hover{transform:translateY(-5px);box-shadow:0 20px 46px rgba(12,17,28,.22)}
-  .pcard .play{position:relative;z-index:1;width:60px;height:60px;border-radius:50%;border:1.5px solid rgba(244,245,247,.6);
-    display:flex;align-items:center;justify-content:center;transition:transform .4s var(--ease),background .3s,border-color .3s}
+  .pcard iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1}
+  .pcard .play{position:relative;z-index:2;width:60px;height:60px;border-radius:50%;border:1.5px solid rgba(244,245,247,.6);
+    display:flex;align-items:center;justify-content:center;transition:transform .4s var(--ease),background .3s,border-color .3s;pointer-events:none}
   .pcard:hover .play{transform:scale(1.12);background:var(--accent);border-color:var(--accent)}
   .pcard .play svg{width:22px;height:22px;fill:#F4F5F7;margin-left:3px}
-  .pcard .plabel{position:absolute;left:18px;bottom:16px;z-index:1;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,245,247,.78)}
+  .pcard .plabel{position:absolute;left:18px;bottom:16px;z-index:2;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,245,247,.78)}
   .pnote{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--muted);margin-top:20px}
 
   /* ===== stat cards ===== */
@@ -305,11 +306,11 @@
   <header class="hero">
     <div class="wrap">
       <div class="eyebrow reveal"><span class="bar-line"></span>Video Authority System</div>
-      <h1 class="ttl reveal d1">The best firm in your market, <i>invisible</i> everywhere else.</h1>
+      <h1 class="ttl reveal d1">The best firm in Lafayette, LA, <i>invisible</i> everywhere else.</h1>
       <p class="sub reveal d2">A 90-day content strategy, built specifically for Summit Financial Wealth Advisors. This is how we make the firm the obvious choice, before the first call.</p>
       <div class="metarow reveal d3">
         <div class="m"><div class="k">Firm</div><div class="v">Summit</div></div>
-        <div class="m"><div class="k">Headquarters</div><div class="v">Your Market</div></div>
+        <div class="m"><div class="k">Headquarters</div><div class="v">Lafayette, LA</div></div>
         <div class="m"><div class="k">Niche</div><div class="v">Gulf South retirees and pre-retirees with significant investable assets, including business owners and corporate executives navigating retirement transitions. Heavy concentration of Louisiana energy-sector, professional-services, and small-business wealth.</div></div>
         <div class="m"><div class="k">Timeline</div><div class="v">90 days</div></div>
       </div>
@@ -323,7 +324,7 @@
       <h2 class="h2 reveal d1">A short walkthrough, just for <i>you.</i></h2>
       <div class="video-frame reveal d2" style="margin-top:46px">
         <div class="ar">
-          <iframe src="https://www.tella.tv/video/vid_cmnarzq20007404lddwfs4kaa/embed" allowfullscreen allowtransparency title="Lucerna walkthrough for Crestline Wealth Partners"></iframe>
+          <iframe src="https://www.tella.tv/video/get-3-5-new-high-net-worth-clients-quarterly-essl" allowfullscreen allowtransparency title="Lucerna walkthrough for Summit Financial Wealth Advisors"></iframe>
         </div>
       </div>
       <div class="video-cap reveal d3">
@@ -342,7 +343,7 @@
         <div class="h panel hov reveal d1" style="padding:30px 28px"><span class="tick tl"></span><span class="tick br"></span>
           <span class="num">01</span>
           <svg class="ico" viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
-          <p>This is our 90-day content strategy, crafted <b>specifically for your firm</b>. Not a template. A plan that starts where Crestline actually is.</p>
+          <p>This is our 90-day content strategy, crafted <b>specifically for your firm</b>. Not a template. A plan that starts where Summit actually is.</p>
         </div>
         <div class="h panel hov reveal d2" style="padding:30px 28px"><span class="tick tl"></span><span class="tick br"></span>
           <span class="num">02</span>
@@ -365,11 +366,11 @@
       <h2 class="h2 reveal d1">A look at what we <i>make.</i></h2>
       <p class="lede reveal d2">A few examples of the standard. Cinematic, deliberate, and built to earn trust before a word is spoken.</p>
       <div class="pgrid reveal d2">
-        <a class="pcard" href="#" data-link="paste-video-link"><span class="plabel">Reel 01 · Add link</span><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
-        <a class="pcard" href="#" data-link="paste-video-link"><span class="plabel">Reel 02 · Add link</span><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
-        <a class="pcard" href="#" data-link="paste-video-link"><span class="plabel">Reel 03 · Add link</span><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+        <div class="pcard"><iframe src="https://www.tella.tv/video/short-5-avoid-financial-mistakes-simple-investing-for-big-returns-44mk" allowfullscreen allowtransparency loading="lazy"></iframe></div>
+        <div class="pcard"><iframe src="https://www.tella.tv/video/lucernacollectivecom-the-tax-hack-pairing-roth-conversions-with-a-hedge-fund-9v0q" allowfullscreen allowtransparency loading="lazy"></iframe></div>
+        <div class="pcard"><iframe src="https://www.tella.tv/video/1-tech-and-finance-proven-strategies-for-massive-growth-29i1" allowfullscreen allowtransparency loading="lazy"></iframe></div>
       </div>
-      <p class="pnote reveal d3">// Placeholder slots. Drop in portfolio links and these become live, playable embeds.</p>
+      <p class="pnote reveal d3">// Cinematic examples. Click to play.</p>
     </div>
   </section>
 
@@ -380,18 +381,18 @@
       <h2 class="h2 reveal d1">A specialist firm, hidden in plain <i>sight.</i></h2>
       <div class="grid g4" style="margin-top:54px">
         <div class="stat panel hov reveal d1"><span class="tick tl"></span><span class="tick br"></span>
-          <div class="n"><b>$1.4B</b>M</div><div class="l">Assets under<br>management</div></div>
+          <div class="n"><b>$1.4B</b></div><div class="l">Assets under<br>management</div></div>
         <div class="stat panel hov reveal d2"><span class="tick tl"></span><span class="tick br"></span>
-          <div class="n">---</div><div class="l">Client households<br>served</div></div>
+          <div class="n">2,455</div><div class="l">Client households<br>served</div></div>
         <div class="stat panel hov reveal d3"><span class="tick tl"></span><span class="tick br"></span>
-          <div class="n">2003–2026</div><div class="l">Operating since<br>2009</div></div>
+          <div class="n">2003–2026</div><div class="l">Operating since<br>2003</div></div>
         <div class="stat panel hov reveal d4"><span class="tick tl"></span><span class="tick br"></span>
           <div class="n">0</div><div class="l">Owned video<br>assets today</div></div>
       </div>
       <div class="panel hov reveal d2" style="margin-top:18px;display:flex;align-items:center;gap:20px">
         <span class="tick tl"></span><span class="tick br"></span>
         <svg class="ico" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/></svg>
-        <div><span class="coord acc">THE DIFFERENTIATOR</span><div style="font-family:var(--serif);font-size:1.4rem;margin-top:8px;line-height:1.35">A specialist firm with deep gulf south retirees and pre-retirees with significant investable assets, including business owners and corporate executives navigating retirement transitions. heavy concentration of louisiana energy-sector, professional-services, and small-business wealth. expertise. Almost no public footprint.</div></div>
+        <div><span class="coord acc">THE DIFFERENTIATOR</span><div style="font-family:var(--serif);font-size:1.4rem;margin-top:8px;line-height:1.35">Deep Gulf South retirement and exit planning expertise for Louisiana energy executives, professional-services partners, and business owners. Almost no public footprint.</div></div>
       </div>
     </div>
   </section>
@@ -532,16 +533,16 @@
         <div class="grid g2 reveal d2" style="gap:18px">
           <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
             <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M4 19V5l8 4 8-4v14l-8-4-8 4z"/></svg><span class="tag">Bucket 01</span></div>
-            <h3>C</h3><div class="chips"><span class="chip">RSU timing</span><span class="chip">IPO windfall</span><span class="chip">10b5-1</span></div></div>
+            <h3>Client Stories</h3><div class="chips"><span class="chip">RSU timing</span><span class="chip">IPO windfall</span><span class="chip">10b5-1</span></div></div>
           <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
             <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg><span class="tag">Bucket 02</span></div>
-            <h3>T</h3><div class="chips"><span class="chip">Tax design</span><span class="chip">Concentration</span><span class="chip">Liquidity</span></div></div>
+            <h3>Tax Education</h3><div class="chips"><span class="chip">Tax design</span><span class="chip">Concentration</span><span class="chip">Liquidity</span></div></div>
           <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
             <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/></svg><span class="tag">Bucket 03</span></div>
-            <h3>I</h3><div class="chips"><span class="chip">Pre-IPO</span><span class="chip">Secondary</span><span class="chip">Founders</span></div></div>
+            <h3>Investor Mistakes</h3><div class="chips"><span class="chip">Pre-IPO</span><span class="chip">Secondary</span><span class="chip">Founders</span></div></div>
           <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
             <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 4 2 6h10c0-2 2-3 2-6a7 7 0 0 0-7-7zM9 21h6M10 18v3M14 18v3"/></svg><span class="tag">Bucket 04</span></div>
-            <h3>B</h3><div class="chips"><span class="chip">Philosophy</span><span class="chip">The room</span><span class="chip">Track record</span></div></div>
+            <h3>Behind the Firm</h3><div class="chips"><span class="chip">Philosophy</span><span class="chip">The room</span><span class="chip">Track record</span></div></div>
         </div>
       </div>
     </div>
@@ -558,10 +559,10 @@
           <div class="ytbanner"></div>
           <div class="ytid">
             <div class="ytavatar">JC</div>
-            <div><div class="ytname">James Conole / Root Financial</div><div class="ythandle">@summit-financial-wealth-advisors · youtube.com/@summit-financial-wealth-advisors</div></div>
+            <div class="ytname">James Conole / Root Financial</div><div class="ythandle">@rootfp · youtube.com/@rootfp</div>
           </div>
           <div class="ytstats">
-            <div class="st"><div class="v"><b>000+</b></div><div class="k">Subscribers</div></div>
+            <div class="st"><div class="v"><b>110K+</b></div><div class="k">Subscribers</div></div>
             <div class="st"><div class="v">35M+</div><div class="k">Total views</div></div>
             <div class="st"><div class="v">500+</div><div class="k">Videos</div></div>
           </div>
@@ -569,7 +570,7 @@
         <div class="compread">
           <div class="blk reveal d1"><div class="bk">Content style</div><p>Calm, educational long-form. <span>One advisor at a desk answering the real questions retirees and high earners are searching for. No hype, just clarity.</span></p></div>
           <div class="blk reveal d2"><div class="bk">Why it works</div><p>Trust at scale. <span>Prospects arrive at the discovery call already convinced, because the videos did the teaching and the pre-selling first.</span></p></div>
-          <div class="blk reveal d3"><div class="bk">The opening for Crestline</div><p>He owns retirement. <span>Equity comp for tech operators is wide open. The same playbook, aimed at a sharper niche, with cinematic production he does not have.</span></p></div>
+          <div class="blk reveal d3"><div class="bk">The opening for Summit</div><p>He owns retirement. <span>Gulf South energy executives and business owners navigating exit planning and multi-generational transitions are wide open. The same playbook, aimed at a sharper niche, with cinematic production he does not have.</span></p></div>
         </div>
       </div>
       <p class="pnote reveal d3">// Swap in a live screenshot of the channel here when presenting. Figures are approximate and for direction.</p>
@@ -583,11 +584,11 @@
       <h2 class="h2 reveal d1">Twelve films, one path to the <i>call.</i></h2>
       <div class="funnel reveal d2">
         <div class="ftier tof"><div class="fh"><span class="ft">Top of funnel · Discover</span><span class="fc">5 films</span></div>
-          <div class="chips"><span class="chip">The IPO mistake</span><span class="chip">RSU tax trap</span><span class="chip">Concentration risk</span><span class="chip">When to diversify</span><span class="chip">Founder liquidity</span></div></div>
+          <div class="chips"><span class="chip">How to Roll Over a Shell 401(k) Without a Tax Bomb</span><span class="chip">5 Tax Mistakes Louisiana Business Owners Make</span><span class="chip">Retiring in Louisiana vs. Texas: The Tax Math</span><span class="chip">The Concentrated Stock Problem</span><span class="chip">How Much to Retire in New Orleans or Lafayette</span></div></div>
         <div class="ftier mof"><div class="fh"><span class="ft">Middle · Trust</span><span class="fc">4 films</span></div>
-          <div class="chips"><span class="chip">Our planning process</span><span class="chip">A client&apos;s exit</span><span class="chip">Tax design, shown</span><span class="chip">Inside the firm</span></div></div>
+          <div class="chips"><span class="chip">Our planning process</span><span class="chip">Roth Conversions Between 60 and 73</span><span class="chip">How We Coordinate a Business Sale</span><span class="chip">What a Real Financial Plan Looks Like</span></div></div>
         <div class="ftier bof"><div class="fh"><span class="ft">Bottom · Decide</span><span class="fc">3 films</span></div>
-          <div class="chips"><span class="chip">Why Crestline</span><span class="chip">First 90 days</span><span class="chip">Book a call</span></div></div>
+          <div class="chips"><span class="chip">Helped a Lafayette Oilfield Owner Save $12M</span><span class="chip">Why I Left Wall Street for Louisiana</span><span class="chip">Book a call</span></div></div>
       </div>
     </div>
   </section>
@@ -600,12 +601,12 @@
       <div class="scripthead">
         <div class="scriptbox reveal d1">
           <div class="lab">Video idea · Title</div>
-          <div class="vtitle">five years on the Gulf Coast</div>
+          <div class="vtitle">How to Roll Over a Shell or ExxonMobil 401(k) Without Triggering a Tax Bomb</div>
           <span class="scripttag">Long-form · 10–12 min · YouTube</span>
         </div>
         <div class="scriptbox reveal d2">
           <div class="lab">Why this idea</div>
-          <p>It names a specific, high-stakes moment your exact client is searching for right after a liquidity event. The dollar figure earns the click, the niche filters for qualified viewers, and the topic positions Crestline as the specialist before anyone else in the feed.</p>
+          <p>It names a specific, high-stakes moment your exact client is searching for right after a liquidity event. The dollar figure earns the click, the niche filters for qualified viewers, and the topic positions Summit as the specialist before anyone else in the feed.</p>
         </div>
       </div>
 
@@ -746,7 +747,7 @@ It is about 30 minutes, and it is free. You can watch it here: {{link}}
 No pitch. Just the planning we wish every operator had before their exit.
 
 Talk soon,
-The Crestline team` },
+Summit team` },
       { subj:"Mistake one: selling on emotion",
         body:`Hi {{first_name}},
 
@@ -759,7 +760,7 @@ In the masterclass we show exactly how to build one, and why the operators who s
 Watch the section here: {{link}}
 
 More tomorrow,
-The Crestline team` },
+Summit team` },
       { subj:"A quick-win exercise for today",
         body:`Hi {{first_name}},
 
@@ -772,7 +773,7 @@ There is a measured way to size a position down over time, on your terms. We bre
 Here is the link again: {{link}}
 
 Best,
-The Crestline team` },
+Summit team` },
       { subj:"Where we disagree with the standard advice",
         body:`Hi {{first_name}},
 
@@ -783,7 +784,7 @@ The most valuable planning happens before the money moves. Once it has, most of 
 If your event is on the horizon, this is the one to watch: {{link}}
 
 Talk soon,
-The Crestline team` },
+Summit team` },
       { subj:"A story that proves the framework",
         body:`Hi {{first_name}},
 
@@ -794,18 +795,18 @@ One of the operators we worked with came to us a few months before his company f
 He kept what a lot of people in his position lose. The masterclass walks through the same framework we used: {{link}}
 
 Best,
-The Crestline team` },
+Summit team` },
       { subj:"Last call — book a 15-minute slot",
         body:`Hi {{first_name}},
 
 This is the last note I will send about the masterclass, so I wanted to make it easy.
 
-If you are anywhere near a liquidity event, 30 minutes now can save you a decision you cannot undo later. The Equity Exit Playbook is still free to watch here: {{link}}
+If you are anywhere near a liquidity event, 30 minutes now can save you a decision you cannot undo later. The Gulf South Retirement Transition Playbook is still free to watch here: {{link}}
 
 And if you would rather just talk it through, you can grab a 15-minute slot on my calendar. No pressure, no pitch. Just a clear next step.
 
 Whenever you are ready,
-The Crestline team` }
+Summit team` }
     ];
     const noEl = document.getElementById('email-no');
     const subjEl = document.getElementById('email-subj');
