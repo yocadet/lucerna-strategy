@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucerna × Alpine Wealth Management</title>
+<meta name="description" content="A 90-day video authority system, built specifically for Crestline Wealth Partners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Anton&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F7F9; --surface:#FFFFFF; --fg:#0C111C; --muted:#566074; --accent:#3D7BFF;
+    --accent-soft:rgba(61,123,255,.09); --navy:#0C111C;
+    --ln:rgba(12,17,28,.13); --ln2:rgba(12,17,28,.22); --halo:rgba(61,123,255,.16);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace; --impact:'Anton',sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:18px;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+  /* subtle grain */
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.04;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .acc{color:var(--accent)}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+
+  /* ===== reveal animation ===== */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+  .d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+
+  /* ===== scroll progress bar ===== */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:400;
+    box-shadow:0 0 12px rgba(61,123,255,.5);transition:width .08s linear}
+
+  /* ===== top bar ===== */
+  .bar{position:fixed;top:3px;left:0;right:0;z-index:300;display:flex;align-items:stretch;
+    border-bottom:1px solid var(--ln);background:rgba(246,247,249,.82);backdrop-filter:blur(12px)}
+  .bar .brand{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--fg);font-weight:600;padding:0 22px;display:flex;align-items:center;border-right:1px solid var(--ln);height:54px}
+  .bar .status{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 20px;display:flex;align-items:center}
+  .bar .status b{color:var(--accent);font-weight:500}
+  .bar .cta{margin-left:auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);
+    border-left:1px solid var(--ln);padding:0 26px;display:flex;align-items:center;text-decoration:none;transition:color .25s,background .25s}
+  .bar .cta:hover{background:var(--accent);color:#fff}
+
+  /* ===== section scaffolding ===== */
+  section{padding:120px 0;border-bottom:1px solid var(--ln);position:relative}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:14px}
+  .eyebrow .idx{color:var(--muted)}
+  .eyebrow .bar-line{flex:0 0 38px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+  .h2{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,4.8vw,3.5rem);letter-spacing:-.018em;line-height:1.05;margin:22px 0 0;max-width:20ch}
+  .h2 i{font-style:italic;color:var(--accent)}
+  .lede{font-family:var(--sans);font-size:1.3rem;color:var(--muted);max-width:54ch;line-height:1.6;margin-top:24px}
+
+  .coord{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  /* framed panel + corner ticks */
+  .panel{position:relative;border:1px solid var(--ln2);padding:34px 32px;background:var(--surface);
+    box-shadow:0 1px 2px rgba(12,17,28,.03);transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)}
+  .panel.hov:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(12,17,28,.10);border-color:var(--accent)}
+  .tick{position:absolute;width:11px;height:11px;z-index:2}
+  .tick.tl{top:9px;left:9px;border-top:1px solid var(--ln2);border-left:1px solid var(--ln2)}
+  .tick.tr{top:9px;right:9px;border-top:1px solid var(--ln2);border-right:1px solid var(--ln2)}
+  .tick.bl{bottom:9px;left:9px;border-bottom:1px solid var(--ln2);border-left:1px solid var(--ln2)}
+  .tick.br{bottom:9px;right:9px;border-bottom:1px solid var(--ln2);border-right:1px solid var(--ln2)}
+
+  /* icon styling */
+  .ico{width:26px;height:26px;stroke:var(--accent);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block;transition:transform .4s var(--ease)}
+  .ico-sm{width:18px;height:18px}
+  .hov:hover .ico{transform:scale(1.12) rotate(-3deg)}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+    text-decoration:none;cursor:pointer;border:none;padding:18px 30px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 24px rgba(61,123,255,.28)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(61,123,255,.42)}
+  .btn-primary .arr{transition:transform .3s var(--ease)}
+  .btn-primary:hover .arr{transform:translateX(6px)}
+  .btn-primary .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.7);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%{box-shadow:0 0 0 10px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+
+  /* ===== HERO ===== */
+  .hero{padding:170px 0 96px;border-bottom:1px solid var(--ln);position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:1000px;height:1000px;border-radius:50%;
+    background:radial-gradient(circle,var(--halo),transparent 62%);pointer-events:none;z-index:0}
+  .hero>*{position:relative;z-index:1}
+  .hero .ttl{font-family:var(--serif);font-weight:500;font-size:clamp(2.8rem,7vw,5.4rem);letter-spacing:-.02em;line-height:1.0;margin:24px 0 26px;max-width:17ch}
+  .hero .ttl i{font-style:italic;color:var(--accent)}
+  .hero .sub{font-family:var(--sans);font-size:1.35rem;color:var(--muted);max-width:50ch;line-height:1.6}
+  .metarow{display:flex;flex-wrap:wrap;gap:0;margin-top:48px;border:1px solid var(--ln2);background:var(--surface)}
+  .metarow .m{flex:1;min-width:150px;padding:22px 24px;border-right:1px solid var(--ln);transition:background .3s}
+  .metarow .m:last-child{border-right:none}
+  .metarow .m:hover{background:var(--accent-soft)}
+  .metarow .m .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .metarow .m .v{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin-top:8px;letter-spacing:-.01em}
+
+  /* ===== video embed (Tella) ===== */
+  .video-frame{position:relative;border:1px solid var(--ln2);background:var(--navy);padding:10px;
+    box-shadow:0 24px 60px rgba(12,17,28,.16)}
+  .video-frame .ar{position:relative;width:100%;padding-top:56.25%;overflow:hidden}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-cap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:16px}
+
+  /* ===== help / value list ===== */
+  .help{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+  .help .h{display:flex;flex-direction:column;gap:16px}
+  .help .h .num{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--accent)}
+  .help .h p{font-family:var(--sans);font-size:1.12rem;line-height:1.55;color:var(--fg)}
+  .help .h p b{color:var(--accent);font-weight:600}
+
+  /* ===== portfolio ===== */
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+  .pcard{position:relative;border:1px solid var(--ln2);background:var(--navy);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;text-decoration:none;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .pcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(61,123,255,.22),transparent 60%)}
+  .pcard:hover{transform:translateY(-5px);box-shadow:0 20px 46px rgba(12,17,28,.22)}
+  .pcard .play{position:relative;z-index:1;width:60px;height:60px;border-radius:50%;border:1.5px solid rgba(244,245,247,.6);
+    display:flex;align-items:center;justify-content:center;transition:transform .4s var(--ease),background .3s,border-color .3s}
+  .pcard:hover .play{transform:scale(1.12);background:var(--accent);border-color:var(--accent)}
+  .pcard .play svg{width:22px;height:22px;fill:#F4F5F7;margin-left:3px}
+  .pcard .plabel{position:absolute;left:18px;bottom:16px;z-index:1;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,245,247,.78)}
+  .pnote{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--muted);margin-top:20px}
+
+  /* ===== stat cards ===== */
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .stat .n{font-family:var(--impact);text-transform:uppercase;font-size:clamp(2.4rem,5vw,3.4rem);line-height:.9;letter-spacing:.01em}
+  .stat .n b{color:var(--accent);font-weight:400}
+  .stat .l{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:14px;line-height:1.7}
+
+  .icard{display:flex;flex-direction:column;gap:16px}
+  .icard .top{display:flex;align-items:center;gap:12px}
+  .icard .tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .icard h3{font-family:var(--serif);font-weight:500;font-size:1.4rem;letter-spacing:-.01em;line-height:1.2}
+  .icard p{font-family:var(--sans);font-size:1.05rem;color:var(--muted);line-height:1.6}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;color:var(--fg);border:1px solid var(--ln2);padding:8px 13px;line-height:1.3;transition:border-color .3s,color .3s,background .3s}
+  .chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+  .chip.b{border-color:var(--accent);color:var(--accent)}
+
+  /* ===== offer 6 steps ===== */
+  .ostep{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+  .ostep .s{position:relative;border:1px solid var(--ln2);background:var(--surface);padding:32px 28px;overflow:hidden;
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s}
+  .ostep .s::before{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:var(--accent);transition:width .5s var(--ease)}
+  .ostep .s:hover{transform:translateY(-6px);box-shadow:0 20px 46px rgba(12,17,28,.12);border-color:var(--accent)}
+  .ostep .s:hover::before{width:100%}
+  .ostep .s .num{font-family:var(--impact);font-size:2.6rem;color:var(--ln2);line-height:.8;transition:color .4s}
+  .ostep .s:hover .num{color:var(--accent)}
+  .ostep .s .ic{margin:18px 0 16px}
+  .ostep .s h3{font-family:var(--serif);font-weight:500;font-size:1.35rem;letter-spacing:-.01em;line-height:1.2}
+  .ostep .s p{font-family:var(--sans);font-size:1.04rem;color:var(--muted);line-height:1.6;margin-top:12px}
+
+  /* ===== three-pillar (generate/capture/convert) ===== */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ln2);margin-top:46px;background:var(--surface)}
+  .pillars .p{padding:34px 30px;border-right:1px solid var(--ln);transition:background .3s}
+  .pillars .p:last-child{border-right:none}
+  .pillars .p:hover{background:var(--accent-soft)}
+  .pillars .p .pk{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .pillars .p h3{font-family:var(--serif);font-weight:500;font-size:1.5rem;letter-spacing:-.01em;margin:14px 0 12px}
+  .pillars .p p{font-family:var(--sans);font-size:1.04rem;color:var(--muted);line-height:1.6}
+
+  /* ===== flow chart ===== */
+  .flow{display:flex;flex-direction:column;gap:0;margin-top:46px}
+  .fstep{position:relative;display:grid;grid-template-columns:64px 1fr;gap:24px;padding:0 0 8px}
+  .fline{display:flex;flex-direction:column;align-items:center;gap:0}
+  .fdot{width:64px;height:64px;border:1px solid var(--ln2);background:var(--surface);border-radius:50%;display:flex;align-items:center;justify-content:center;
+    flex:0 0 64px;transition:border-color .3s,background .3s,transform .3s}
+  .fconn{width:1px;flex:1;min-height:36px;background:var(--ln2)}
+  .fstep:last-child .fconn{display:none}
+  .fbody{border:1px solid var(--ln2);background:var(--surface);padding:22px 26px;margin-bottom:24px;cursor:default;
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+  .fbody .fk{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .fbody h3{font-family:var(--serif);font-weight:500;font-size:1.35rem;letter-spacing:-.01em;margin:8px 0 0}
+  .fbody .fdesc{font-family:var(--sans);font-size:1.04rem;color:var(--muted);line-height:1.6;max-height:0;opacity:0;overflow:hidden;
+    transition:max-height .5s var(--ease),opacity .4s var(--ease),margin .4s var(--ease)}
+  .fstep:hover .fbody{transform:translateX(8px);box-shadow:0 14px 34px rgba(12,17,28,.10);border-color:var(--accent)}
+  .fstep:hover .fdot{border-color:var(--accent);background:var(--accent);transform:scale(1.06)}
+  .fstep:hover .fdot .ico{stroke:#fff}
+  .fstep:hover .fbody .fdesc{max-height:120px;opacity:1;margin-top:12px}
+  .fhint{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted);margin-top:6px}
+
+  /* ===== competitive (single competitor focus) ===== */
+  .compwrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:54px;align-items:stretch}
+  .ytcard{position:relative;border:1px solid var(--ln2);background:var(--navy);overflow:hidden;display:flex;flex-direction:column}
+  .ytbanner{height:120px;background:radial-gradient(circle at 30% 40%,rgba(61,123,255,.4),transparent 60%),linear-gradient(120deg,#10182a,#0a0f1a)}
+  .ytid{display:flex;align-items:center;gap:18px;padding:0 26px;margin-top:-32px;position:relative}
+  .ytavatar{width:72px;height:72px;border-radius:50%;background:var(--accent);border:3px solid var(--navy);display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:600;font-size:1.7rem;color:#fff}
+  .ytname{color:#F4F5F7;font-family:var(--serif);font-weight:500;font-size:1.45rem;letter-spacing:-.01em;padding-top:30px}
+  .ythandle{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:#8c97ad;margin-top:4px}
+  .ytstats{display:flex;gap:0;border-top:1px solid rgba(244,245,247,.1);margin-top:24px}
+  .ytstats .st{flex:1;padding:20px 22px;border-right:1px solid rgba(244,245,247,.1)}
+  .ytstats .st:last-child{border-right:none}
+  .ytstats .st .v{font-family:var(--impact);font-size:1.7rem;color:#F4F5F7;line-height:1}
+  .ytstats .st .v b{color:var(--accent);font-weight:400}
+  .ytstats .st .k{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#8c97ad;margin-top:8px}
+  .compread{display:flex;flex-direction:column;gap:14px}
+  .compread .blk{border:1px solid var(--ln2);background:var(--surface);padding:22px 24px;transition:border-color .3s,transform .3s}
+  .compread .blk:hover{border-color:var(--accent);transform:translateX(6px)}
+  .compread .blk .bk{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .compread .blk p{font-family:var(--sans);font-size:1.05rem;color:var(--fg);line-height:1.55;margin-top:10px}
+  .compread .blk p span{color:var(--muted)}
+
+  /* ===== funnel (centered rows) ===== */
+  .funnel{display:flex;flex-direction:column;gap:14px;align-items:center;margin-top:54px}
+  .ftier{width:100%;border:1px solid var(--ln2);background:var(--surface);padding:24px 28px;position:relative;text-align:center;
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+  .ftier:hover{transform:scale(1.015);box-shadow:0 16px 38px rgba(12,17,28,.10);border-color:var(--accent)}
+  .ftier.tof{max-width:100%}
+  .ftier.mof{max-width:80%}
+  .ftier.bof{max-width:58%}
+  .ftier .fh{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px}
+  .ftier .fh .ft{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .ftier .fh .fc{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .ftier .chips{justify-content:center}
+
+  /* ===== long-form script ===== */
+  .scripthead{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;margin-top:54px;align-items:stretch}
+  .scriptbox{border:1px solid var(--ln2);background:var(--surface);padding:30px 30px}
+  .scriptbox .lab{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .scriptbox .vtitle{font-family:var(--serif);font-weight:500;font-size:1.7rem;letter-spacing:-.015em;line-height:1.15;margin-top:12px}
+  .scriptbox p{font-family:var(--sans);font-size:1.06rem;color:var(--muted);line-height:1.6;margin-top:14px}
+  .fullscript{border:1px solid var(--ln2);background:var(--surface);margin-top:18px}
+  .fullscript .seg{border-bottom:1px solid var(--ln);padding:28px 30px}
+  .fullscript .seg:last-child{border-bottom:none}
+  .fullscript .seg .sk{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px}
+  .fullscript .seg .sk .tc{color:var(--muted)}
+  .fullscript .seg.scripted h4{font-family:var(--serif);font-weight:500;font-size:1.25rem;margin:14px 0 0}
+  .fullscript .seg.scripted p{font-family:var(--sans);font-size:1.12rem;line-height:1.7;color:var(--fg);margin-top:14px}
+  .fullscript .seg.scripted p em{color:var(--accent);font-style:italic}
+  .fullscript .seg.outline h4{font-family:var(--serif);font-weight:500;font-size:1.3rem;margin:14px 0 8px}
+  .fullscript .seg.outline ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:10px}
+  .fullscript .seg.outline li{font-family:var(--sans);font-size:1.05rem;color:var(--muted);line-height:1.55;padding-left:22px;position:relative}
+  .fullscript .seg.outline li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;background:var(--accent)}
+  .scripttag{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:5px 10px;margin-top:16px}
+
+  /* ===== email sequence (interactive) ===== */
+  .emailui{margin-top:54px}
+  .emailtabs{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--ln2);background:var(--surface)}
+  .etab{padding:22px 12px;border-right:1px solid var(--ln);text-align:center;cursor:pointer;background:none;font:inherit;
+    transition:background .3s,transform .3s}
+  .etab:last-child{border-right:none}
+  .etab:hover,.etab.active{background:var(--accent-soft)}
+  .etab .en{font-family:var(--impact);font-size:2rem;color:var(--ln2);line-height:1;transition:color .3s}
+  .etab:hover .en,.etab.active .en{color:var(--accent)}
+  .etab .et{font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:10px;line-height:1.4}
+  .emailview{border:1px solid var(--ln2);border-top:none;background:var(--surface);padding:34px 36px;min-height:280px}
+  .emailview .ehead{display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--ln);padding-bottom:18px;flex-wrap:wrap}
+  .emailview .ehead .eno{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;color:var(--accent)}
+  .emailview .ehead .esubj{font-family:var(--serif);font-weight:500;font-size:1.4rem;letter-spacing:-.01em}
+  .emailview .ebody{font-family:var(--sans);font-size:1.08rem;line-height:1.72;color:var(--fg);margin-top:20px;white-space:pre-line}
+  .ehint{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted);margin-top:18px;display:flex;align-items:center;gap:8px}
+
+  /* ===== CTA / calendly ===== */
+  .cta-sec{padding:120px 0 150px;border-bottom:none;position:relative;overflow:hidden}
+  .cta-sec::before{content:"";position:absolute;bottom:-30%;left:50%;transform:translateX(-50%);width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle,var(--halo),transparent 62%);pointer-events:none;z-index:0}
+  .cta-sec>*{position:relative;z-index:1}
+  .cta-sec .h2{margin-bottom:14px}
+  .cal{margin-top:40px;border:1px solid var(--ln2);position:relative;background:var(--surface)}
+  .calendly-inline-widget{min-width:320px;height:680px}
+
+  .foot{padding:40px 0 80px;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.9;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot b{color:var(--fg)}
+
+  @media(max-width:860px){
+    body{font-size:17px}
+    .wrap{padding:0 22px}
+    section{padding:80px 0}
+    .g3,.g4{grid-template-columns:repeat(2,1fr)}
+    .help,.ostep{grid-template-columns:1fr}
+    .pgrid{grid-template-columns:1fr}
+    .pillars{grid-template-columns:1fr}
+    .pillars .p{border-right:none;border-bottom:1px solid var(--ln)}
+    .pillars .p:last-child{border-bottom:none}
+    .ftier.mof,.ftier.bof{max-width:100%}
+    .compwrap,.scripthead{grid-template-columns:1fr}
+    .ytstats .st .v{font-size:1.4rem}
+    .emailtabs{grid-template-columns:repeat(3,1fr)}
+    .emailtabs .etab:nth-child(3){border-right:none}
+    .metarow .m{flex-basis:50%}
+    .bar .status{display:none}
+  }
+</style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="progress" id="progress"></div>
+
+  <!-- TOP BAR -->
+  <div class="bar">
+    <div class="brand">LUCERNA</div>
+    <div class="status">PREPARED FOR&nbsp;<b>Alpine Wealth Management</b></div>
+    <a class="cta" href="#book">Let&apos;s chat →</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="bar-line"></span>Video Authority System</div>
+      <h1 class="ttl reveal d1">The best firm in your market, <i>invisible</i> everywhere else.</h1>
+      <p class="sub reveal d2">A 90-day content strategy, built specifically for Alpine Wealth Management. This is how we make the firm the obvious choice, before the first call.</p>
+      <div class="metarow reveal d3">
+        <div class="m"><div class="k">Firm</div><div class="v">Alpine</div></div>
+        <div class="m"><div class="k">Headquarters</div><div class="v">Your Market</div></div>
+        <div class="m"><div class="k">Niche</div><div class="v">SaaS and enterprise-software founders and early employees in Silicon Slopes (SLC, Lehi, Provo, Park City) — navigating pre-IPO equity, Utah's flat-income-tax structure, concentrated founder positions, and the specific dynamics of serial entrepreneurship in the Utah tech ecosystem.</div></div>
+        <div class="m"><div class="k">Timeline</div><div class="v">90 days</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- VIDEO (Tella) -->
+  <section id="walkthrough">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="bar-line"></span>Watch first</div>
+      <h2 class="h2 reveal d1">A short walkthrough, just for <i>you.</i></h2>
+      <div class="video-frame reveal d2" style="margin-top:46px">
+        <div class="ar">
+          <iframe src="https://www.tella.tv/video/vid_cmnarzq20007404lddwfs4kaa/embed" allowfullscreen allowtransparency title="Lucerna walkthrough for Crestline Wealth Partners"></iframe>
+        </div>
+      </div>
+      <div class="video-cap reveal d3">
+        <span class="coord">RUNTIME · A FEW MINUTES</span>
+        <span class="coord acc">RECORDED BY LUCERNA FOR ALPINE WEALTH MANAGEMENT</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW THIS HELPS YOU -->
+  <section id="help">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">01</span> / Why this matters</div>
+      <h2 class="h2 reveal d1">How this document will <i>help you.</i></h2>
+      <div class="help">
+        <div class="h panel hov reveal d1" style="padding:30px 28px"><span class="tick tl"></span><span class="tick br"></span>
+          <span class="num">01</span>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
+          <p>This is our 90-day content strategy, crafted <b>specifically for your firm</b>. Not a template. A plan that starts where Crestline actually is.</p>
+        </div>
+        <div class="h panel hov reveal d2" style="padding:30px 28px"><span class="tick tl"></span><span class="tick br"></span>
+          <span class="num">02</span>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><path d="M19 15l2 2-2 2"/></svg>
+          <p>Every detail fits your niche and your clients. It is the exact strategy to build the business through content, made <b>plug-and-play</b> for you.</p>
+        </div>
+        <div class="h panel hov reveal d3" style="padding:30px 28px"><span class="tick tl"></span><span class="tick br"></span>
+          <span class="num">03</span>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-9"/><path d="M21 7v5h-5"/></svg>
+          <p>The goal is simple. We <b>compound your presence</b> month over month, turning quiet expertise into qualified inbound that finds you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">02</span> / Selected work</div>
+      <h2 class="h2 reveal d1">A look at what we <i>make.</i></h2>
+      <p class="lede reveal d2">A few examples of the standard. Cinematic, deliberate, and built to earn trust before a word is spoken.</p>
+      <div class="pgrid reveal d2">
+        <a class="pcard" href="#" data-link="paste-video-link"><span class="plabel">Reel 01 · Add link</span><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+        <a class="pcard" href="#" data-link="paste-video-link"><span class="plabel">Reel 02 · Add link</span><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+        <a class="pcard" href="#" data-link="paste-video-link"><span class="plabel">Reel 03 · Add link</span><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+      </div>
+      <p class="pnote reveal d3">// Placeholder slots. Drop in portfolio links and these become live, playable embeds.</p>
+    </div>
+  </section>
+
+  <!-- FIRM PROFILE -->
+  <section id="profile">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">03</span> / Firm Profile</div>
+      <h2 class="h2 reveal d1">A specialist firm, hidden in plain <i>sight.</i></h2>
+      <div class="grid g4" style="margin-top:54px">
+        <div class="stat panel hov reveal d1"><span class="tick tl"></span><span class="tick br"></span>
+          <div class="n"><b>$800M</b>M</div><div class="l">Assets under<br>management</div></div>
+        <div class="stat panel hov reveal d2"><span class="tick tl"></span><span class="tick br"></span>
+          <div class="n">---</div><div class="l">Client households<br>served</div></div>
+        <div class="stat panel hov reveal d3"><span class="tick tl"></span><span class="tick br"></span>
+          <div class="n">2012–2026</div><div class="l">Operating since<br>2009</div></div>
+        <div class="stat panel hov reveal d4"><span class="tick tl"></span><span class="tick br"></span>
+          <div class="n">0</div><div class="l">Owned video<br>assets today</div></div>
+      </div>
+      <div class="panel hov reveal d2" style="margin-top:18px;display:flex;align-items:center;gap:20px">
+        <span class="tick tl"></span><span class="tick br"></span>
+        <svg class="ico" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/></svg>
+        <div><span class="coord acc">THE DIFFERENTIATOR</span><div style="font-family:var(--serif);font-size:1.4rem;margin-top:8px;line-height:1.35">A specialist firm with deep saas and enterprise-software founders and early employees in silicon slopes (slc, lehi, provo, park city) — navigating pre-ipo equity, utah's flat-income-tax structure, concentrated founder positions, and the specific dynamics of serial entrepreneurship in the utah tech ecosystem. expertise. Almost no public footprint.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE VIDEO OFFER -->
+  <section id="offer">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">04</span> / The Free Video Offer</div>
+      <h2 class="h2 reveal d1">One cinematic video, on us. Here is exactly how it <i>works.</i></h2>
+      <p class="lede reveal d2">No commitment. We produce a flagship piece end to end so you can feel the standard before you decide anything.</p>
+      <div class="ostep">
+        <div class="s reveal d1">
+          <div class="num">01</div>
+          <svg class="ico ic" viewBox="0 0 24 24"><path d="M15 10l4.5-2.5v9L15 14M4 6h11v12H4z"/></svg>
+          <h3>Hop on a call</h3>
+          <p>A short conversation to understand the firm, the niche, and the clients you want more of.</p>
+        </div>
+        <div class="s reveal d2">
+          <div class="num">02</div>
+          <svg class="ico ic" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 9h8M8 13h6"/></svg>
+          <h3>We script it</h3>
+          <p>Lucerna writes the full script around your niche, so every line sounds like you at your sharpest.</p>
+        </div>
+        <div class="s reveal d3">
+          <div class="num">03</div>
+          <svg class="ico ic" viewBox="0 0 24 24"><path d="M3 5h12v14H3zM15 9l6-3v12l-6-3"/><circle cx="9" cy="12" r="2.5"/></svg>
+          <h3>Record on Zoom</h3>
+          <p>You show up and talk. We direct the session over a simple Zoom call. No crew, no studio day.</p>
+        </div>
+        <div class="s reveal d4">
+          <div class="num">04</div>
+          <svg class="ico ic" viewBox="0 0 24 24"><path d="M4 4h16v12H4zM8 20h8M12 16v4M8 9l2 2 4-4"/></svg>
+          <h3>Done-for-you editing</h3>
+          <p>We handle the full cinematic edit. Pacing, captions, motion, sound. You review, we refine.</p>
+        </div>
+        <div class="s reveal d5">
+          <div class="num">05</div>
+          <svg class="ico ic" viewBox="0 0 24 24"><path d="M3 5h18v11H3zM3 9h18M7 20h10"/><path d="M16 12l-3-2v4z" fill="currentColor" stroke="none"/></svg>
+          <h3>Thumbnail design</h3>
+          <p>A custom, click-worthy thumbnail designed to earn the view without ever looking like clickbait.</p>
+        </div>
+        <div class="s reveal d6">
+          <div class="num">06</div>
+          <svg class="ico ic" viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-7-8-3z"/></svg>
+          <h3>Optimize &amp; post</h3>
+          <p>Title, description, tags, and timing. We optimize for search and publish it where clients look.</p>
+        </div>
+      </div>
+      <div class="reveal d3" style="margin-top:46px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+        <button class="btn btn-primary" data-calendly><span class="pulse"></span>Let&apos;s chat<span class="arr">→</span></button>
+        <span class="coord">15-minute intro call. No pressure, just a conversation.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW CONTENT GENERATES LEADS -->
+  <section id="system">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">05</span> / The Content System</div>
+      <h2 class="h2 reveal d1">How free content turns into paying <i>clients.</i></h2>
+      <p class="lede reveal d2">Each piece of content moves your ideal client one step closer to their goal. Get them real results for free, and they are far more likely to invest in your paid service. The name of the game is to give as much value as possible, for free. It sounds paradoxical. It is also exactly how it works.</p>
+
+      <div class="pillars reveal d2">
+        <div class="p">
+          <div class="pk">Step 01</div>
+          <h3>Generate demand</h3>
+          <p>Short-form content and message amplification put the firm in front of the right people and create the first spark of interest.</p>
+        </div>
+        <div class="p">
+          <div class="pk">Step 02</div>
+          <h3>Capture demand</h3>
+          <p>Long-form content builds trust and pre-sells the individual prospect, doing the convincing long before a call is booked.</p>
+        </div>
+        <div class="p">
+          <div class="pk">Step 03</div>
+          <h3>Convert calls</h3>
+          <p>You work with pre-educated clients. Less time spent selling, more time spent listing needs and onboarding the right fit.</p>
+        </div>
+      </div>
+
+      <div class="reveal d2" style="margin-top:64px">
+        <div class="coord acc" style="margin-bottom:6px">THE PATH · CONTENT TO CONVERSION</div>
+        <p class="fhint">Hover each step to see how it works.</p>
+        <div class="flow">
+          <div class="fstep">
+            <div class="fline"><div class="fdot"><svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg></div><div class="fconn"></div></div>
+            <div class="fbody"><div class="fk">01 · Lead Discovery</div><h3>The lead finds the video</h3><div class="fdesc">A prospect discovers a video through YouTube search or the algorithm. The firm shows up at the exact moment they are looking for answers.</div></div>
+          </div>
+          <div class="fstep">
+            <div class="fline"><div class="fdot"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="fconn"></div></div>
+            <div class="fbody"><div class="fk">02 · Video-Driven CTA</div><h3>A mid-video invitation</h3><div class="fdesc">A mid-video call to action invites them to book a discovery call. If they are not ready, the CTA points them to another related video, keeping them in your world.</div></div>
+          </div>
+          <div class="fstep">
+            <div class="fline"><div class="fdot"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM3 7l9 6 9-6"/></svg></div><div class="fconn"></div></div>
+            <div class="fbody"><div class="fk">03 · Lead Magnet Funnel</div><h3>The email is captured</h3><div class="fdesc">A lead magnet in the description captures the email, turning an anonymous viewer into a contact you own and can nurture.</div></div>
+          </div>
+          <div class="fstep">
+            <div class="fline"><div class="fdot"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 4h16v12H4zM4 8l8 5 8-5"/><path d="M2 20h20"/></svg></div><div class="fconn"></div></div>
+            <div class="fbody"><div class="fk">04 · Nurturing Emails</div><h3>The sequence keeps them warm</h3><div class="fdesc">An email nurture sequence keeps the prospect engaged, building familiarity and trust until they are ready to act.</div></div>
+          </div>
+          <div class="fstep">
+            <div class="fline"><div class="fdot"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div></div>
+            <div class="fbody"><div class="fk">05 · Call Booked &amp; Close</div><h3>The discovery call, then the close</h3><div class="fdesc">A discovery call is booked with a prospect who already trusts the firm. The conversation is short, warm, and far more likely to close.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 90-DAY STRATEGY -->
+  <section id="strategy">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">06</span> / 90-Day Content Strategy</div>
+      <h2 class="h2 reveal d1">From dark to <i>inbound,</i> in three phases.</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:54px;align-items:start" class="strat-split">
+        <div class="reveal d1">
+          <div style="border-left:1px solid var(--ln2);margin-left:8px">
+            <div style="position:relative;padding:0 0 44px 36px">
+              <span style="position:absolute;left:-5px;top:4px;width:9px;height:9px;background:var(--accent);box-shadow:0 0 16px rgba(61,123,255,.5)"></span>
+              <div class="coord acc">Days 1–30 · Foundation</div>
+              <h3 style="font-family:var(--serif);font-weight:500;font-size:1.5rem;letter-spacing:-.01em;margin:10px 0 14px">Phase 1: Foundation</h3>
+              <div class="chips"><span class="chip b">Flagship film</span><span class="chip">Positioning</span><span class="chip">Visual system</span></div>
+            </div>
+            <div style="position:relative;padding:0 0 44px 36px">
+              <span style="position:absolute;left:-5px;top:4px;width:9px;height:9px;background:var(--accent);box-shadow:0 0 16px rgba(61,123,255,.5)"></span>
+              <div class="coord acc">Days 31–60 · Authority</div>
+              <h3 style="font-family:var(--serif);font-weight:500;font-size:1.5rem;letter-spacing:-.01em;margin:10px 0 14px">Phase 2: Authority</h3>
+              <div class="chips"><span class="chip b">Insight series</span><span class="chip">Client stories</span><span class="chip">Distribution</span></div>
+            </div>
+            <div style="position:relative;padding:0 0 0 36px">
+              <span style="position:absolute;left:-5px;top:4px;width:9px;height:9px;background:var(--accent);box-shadow:0 0 16px rgba(61,123,255,.5)"></span>
+              <div class="coord acc">Days 61–90 · Inbound</div>
+              <h3 style="font-family:var(--serif);font-weight:500;font-size:1.5rem;letter-spacing:-.01em;margin:10px 0 14px">Phase 3: Inbound</h3>
+              <div class="chips"><span class="chip b">Funnel live</span><span class="chip">Lead magnet</span><span class="chip">Qualified calls</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid g2 reveal d2" style="gap:18px">
+          <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
+            <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M4 19V5l8 4 8-4v14l-8-4-8 4z"/></svg><span class="tag">Bucket 01</span></div>
+            <h3>C</h3><div class="chips"><span class="chip">RSU timing</span><span class="chip">IPO windfall</span><span class="chip">10b5-1</span></div></div>
+          <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
+            <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg><span class="tag">Bucket 02</span></div>
+            <h3>T</h3><div class="chips"><span class="chip">Tax design</span><span class="chip">Concentration</span><span class="chip">Liquidity</span></div></div>
+          <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
+            <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/></svg><span class="tag">Bucket 03</span></div>
+            <h3>I</h3><div class="chips"><span class="chip">Pre-IPO</span><span class="chip">Secondary</span><span class="chip">Founders</span></div></div>
+          <div class="panel hov icard"><span class="tick tl"></span><span class="tick br"></span>
+            <div class="top"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 4 2 6h10c0-2 2-3 2-6a7 7 0 0 0-7-7zM9 21h6M10 18v3M14 18v3"/></svg><span class="tag">Bucket 04</span></div>
+            <h3>B</h3><div class="chips"><span class="chip">Philosophy</span><span class="chip">The room</span><span class="chip">Track record</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETITIVE -->
+  <section id="competitive">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">07</span> / Competitive Analysis</div>
+      <h2 class="h2 reveal d1">Someone already owns this lane. <i>Dan Pascone</i></h2>
+      <p class="lede reveal d2">A fee-only advisor who built a national audience by teaching retirement and tax planning on YouTube. Proof the model works, and a clear map of the room you can step into.</p>
+      <div class="compwrap">
+        <div class="ytcard reveal d1">
+          <div class="ytbanner"></div>
+          <div class="ytid">
+            <div class="ytavatar">DP</div>
+            <div><div class="ytname">Dan Pascone / Making Sense of Your Money</div><div class="ythandle">@alpine-wealth-management · youtube.com/@alpine-wealth-management</div></div>
+          </div>
+          <div class="ytstats">
+            <div class="st"><div class="v"><b>000+</b></div><div class="k">Subscribers</div></div>
+            <div class="st"><div class="v">35M+</div><div class="k">Total views</div></div>
+            <div class="st"><div class="v">500+</div><div class="k">Videos</div></div>
+          </div>
+        </div>
+        <div class="compread">
+          <div class="blk reveal d1"><div class="bk">Content style</div><p>Calm, educational long-form. <span>One advisor at a desk answering the real questions retirees and high earners are searching for. No hype, just clarity.</span></p></div>
+          <div class="blk reveal d2"><div class="bk">Why it works</div><p>Trust at scale. <span>Prospects arrive at the discovery call already convinced, because the videos did the teaching and the pre-selling first.</span></p></div>
+          <div class="blk reveal d3"><div class="bk">The opening for Crestline</div><p>He owns retirement. <span>Equity comp for tech operators is wide open. The same playbook, aimed at a sharper niche, with cinematic production he does not have.</span></p></div>
+        </div>
+      </div>
+      <p class="pnote reveal d3">// Swap in a live screenshot of the channel here when presenting. Figures are approximate and for direction.</p>
+    </div>
+  </section>
+
+  <!-- FUNNEL -->
+  <section id="funnel">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">08</span> / 12-Video Sales Funnel</div>
+      <h2 class="h2 reveal d1">Twelve films, one path to the <i>call.</i></h2>
+      <div class="funnel reveal d2">
+        <div class="ftier tof"><div class="fh"><span class="ft">Top of funnel · Discover</span><span class="fc">5 films</span></div>
+          <div class="chips"><span class="chip">The IPO mistake</span><span class="chip">RSU tax trap</span><span class="chip">Concentration risk</span><span class="chip">When to diversify</span><span class="chip">Founder liquidity</span></div></div>
+        <div class="ftier mof"><div class="fh"><span class="ft">Middle · Trust</span><span class="fc">4 films</span></div>
+          <div class="chips"><span class="chip">Our planning process</span><span class="chip">A client&apos;s exit</span><span class="chip">Tax design, shown</span><span class="chip">Inside the firm</span></div></div>
+        <div class="ftier bof"><div class="fh"><span class="ft">Bottom · Decide</span><span class="fc">3 films</span></div>
+          <div class="chips"><span class="chip">Why Crestline</span><span class="chip">First 90 days</span><span class="chip">Book a call</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LONG-FORM SCRIPT -->
+  <section id="script">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">09</span> / The Flagship Video</div>
+      <h2 class="h2 reveal d1">A long-form film, outlined and ready to <i>shoot.</i></h2>
+      <div class="scripthead">
+        <div class="scriptbox reveal d1">
+          <div class="lab">Video idea · Title</div>
+          <div class="vtitle">qualified stock options, and that restricted stock you got as an early hire at a Utah tech company are being handled in the way that saves you the most money</div>
+          <span class="scripttag">Long-form · 10–12 min · YouTube</span>
+        </div>
+        <div class="scriptbox reveal d2">
+          <div class="lab">Why this idea</div>
+          <p>It names a specific, high-stakes moment your exact client is searching for right after a liquidity event. The dollar figure earns the click, the niche filters for qualified viewers, and the topic positions Crestline as the specialist before anyone else in the feed.</p>
+        </div>
+      </div>
+
+      <div class="fullscript reveal d2">
+        <div class="seg scripted">
+          <div class="sk">Intro · fully scripted <span class="tc">00:00 – 01:20</span></div>
+          <h4>The hook and the promise</h4>
+          <p><em>"If you just went through an IPO, the most expensive decision of your life is not which stock to buy. It is what you do in the next ninety days."</em>
+
+Most tech operators think the hard part is over once the company goes public. The truth is the opposite. The windfall arrives faster than the plan, and the two biggest threats to it, concentration and taxes, move quietly while everyone is celebrating.
+
+I have sat across from operators who watched two million dollars evaporate, not from a bad investment, but from a handful of avoidable decisions made in the wrong order. In the next few minutes I am going to walk you through the three mistakes I see most often, and the simple framework we use to avoid all of them. Stay to the end and I will show you exactly where to start.</p>
+        </div>
+        <div class="seg outline">
+          <div class="sk">Point 01 · outlined <span class="tc">01:20 – 04:30</span></div>
+          <h4>The mistake we see most often instead of a schedule</h4>
+          <ul>
+            <li>Why the post-IPO adrenaline leads to reactive selling and bad timing.</li>
+            <li>The case for a pre-set, tax-aware selling schedule decided before liquidity.</li>
+            <li>Quick story: an operator who set a 10b5-1 plan and kept his outcome boring, in the best way.</li>
+          </ul>
+        </div>
+        <div class="seg outline">
+          <div class="sk">Point 02 · outlined <span class="tc">04:30 – 07:45</span></div>
+          <h4>Mistake two: holding a concentrated position too long</h4>
+          <ul>
+            <li>The psychology of loyalty to the company stock, and why it quietly compounds risk.</li>
+            <li>How to think about diversification without triggering an unnecessary tax bill.</li>
+            <li>A simple way to size down a position over time on your terms.</li>
+          </ul>
+        </div>
+        <div class="seg outline">
+          <div class="sk">Point 03 · outlined <span class="tc">07:45 – 10:30</span></div>
+          <h4>Mistake three: meeting an advisor after the event, not before</h4>
+          <ul>
+            <li>Why the most valuable planning happens before the liquidity event, not after.</li>
+            <li>What a real pre-liquidity plan looks like, shown on screen as a framework.</li>
+            <li>The cost of waiting, made concrete with a side-by-side comparison.</li>
+          </ul>
+        </div>
+        <div class="seg outline">
+          <div class="sk">Outro &amp; CTA · outlined <span class="tc">10:30 – 12:00</span></div>
+          <h4>The calm invitation</h4>
+          <ul>
+            <li>Recap the three mistakes in one tight sentence each.</li>
+            <li>Point to the free lead magnet in the description: the Equity Exit Playbook.</li>
+            <li>One low-pressure CTA to book a 15-minute call if they want a second set of eyes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL SEQUENCE -->
+  <section id="emails">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">10</span> / The Email Sequence</div>
+      <h2 class="h2 reveal d1">Six emails that fill the <i>webinar.</i></h2>
+      <p class="lede reveal d2">A nurture sequence that promotes the masterclass and warms every lead toward a call. Hover any number to read the full email, ready to copy and send.</p>
+      <div class="emailui reveal d2">
+        <div class="emailtabs" id="emailtabs">
+          <button class="etab active" data-email="0"><div class="en">1</div><div class="et">The invite</div></button>
+          <button class="etab" data-email="1"><div class="en">2</div><div class="et">Mistake one</div></button>
+          <button class="etab" data-email="2"><div class="en">3</div><div class="et">Mistake two</div></button>
+          <button class="etab" data-email="3"><div class="en">4</div><div class="et">Mistake three</div></button>
+          <button class="etab" data-email="4"><div class="en">5</div><div class="et">Client story</div></button>
+          <button class="etab" data-email="5"><div class="en">6</div><div class="et">Last call</div></button>
+        </div>
+        <div class="emailview">
+          <div class="ehead"><span class="eno" id="email-no">EMAIL 01</span><span class="esubj" id="email-subj"></span></div>
+          <div class="ebody" id="email-body"></div>
+          <div class="ehint"><svg class="ico ico-sm" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Hover or tap a number to switch emails.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK A CALL -->
+  <section class="cta-sec" id="book">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="idx">11</span> / Next Steps</div>
+      <h2 class="h2 reveal d1">From invisible to <i>inevitable.</i></h2>
+      <p class="lede reveal d2">Grab a slot to chat here.</p>
+      <div class="cal reveal d3">
+        <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+        <div class="calendly-inline-widget" data-url="https://calendly.com/jcureton-lucernacollective/15m-introduction-call?hide_gdpr_banner=1&background_color=ffffff&text_color=0C111C&primary_color=3D7BFF"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap foot">
+    <div>LUCERNA COLLECTIVE</div>
+    <div>Alpine Wealth Management · DRAFT</div>
+    <div><b>CLARITY IS A STRATEGY.</b></div>
+  </footer>
+
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <script>
+    // scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // scroll progress bar
+    const prog = document.getElementById('progress');
+    const onScroll = ()=>{
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      prog.style.width = (max>0 ? (h.scrollTop/max)*100 : 0) + '%';
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // calendly popup buttons
+    document.querySelectorAll('[data-calendly]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        if(window.Calendly){
+          Calendly.initPopupWidget({url:'https://calendly.com/jcureton-lucernacollective/15m-introduction-call?hide_gdpr_banner=1&primary_color=3D7BFF'});
+        } else {
+          document.getElementById('book').scrollIntoView({behavior:'smooth'});
+        }
+      });
+    });
+
+    // ===== interactive email viewer =====
+    const EMAILS = [
+      { subj:"A free strategy for Alpine clients",
+        body:`Hi {{first_name}},
+
+If you are holding equity in a company that has gone public, or is about to, there is a short window where the right decisions are worth more than any single investment you will ever make.
+
+We put together a free masterclass for exactly this moment: The Silicon Slopes Founder's Equity Playbook. It walks through the three mistakes we see most often after a liquidity event, and the simple framework we use to avoid them.
+
+It is about 30 minutes, and it is free. You can watch it here: {{link}}
+
+No pitch. Just the planning we wish every operator had before their exit.
+
+Talk soon,
+The Crestline team` },
+      { subj:"Mistake one: selling on emotion",
+        body:`Hi {{first_name}},
+
+The first mistake we see after an IPO is simple. People sell on emotion instead of on a schedule.
+
+The adrenaline is real, the headlines are loud, and suddenly a decision worth hundreds of thousands of dollars gets made in an afternoon. A pre-set, tax-aware selling schedule takes that pressure off the table entirely.
+
+In the masterclass we show exactly how to build one, and why the operators who set it early keep their outcomes refreshingly boring.
+
+Watch the section here: {{link}}
+
+More tomorrow,
+The Crestline team` },
+      { subj:"A quick-win exercise for today",
+        body:`Hi {{first_name}},
+
+Mistake two is the quiet one: holding a concentrated position long past the point of prudence.
+
+It feels like loyalty. It is actually risk, compounding in the background. The hard part is diversifying without triggering a tax bill that makes you wish you had not.
+
+There is a measured way to size a position down over time, on your terms. We break it down in the masterclass.
+
+Here is the link again: {{link}}
+
+Best,
+The Crestline team` },
+      { subj:"Where we disagree with the standard advice",
+        body:`Hi {{first_name}},
+
+The third mistake is the most expensive, and the easiest to avoid: meeting an advisor after the liquidity event instead of before.
+
+The most valuable planning happens before the money moves. Once it has, most of the best options are already gone. We show what a real pre-liquidity plan looks like, on screen, in the masterclass.
+
+If your event is on the horizon, this is the one to watch: {{link}}
+
+Talk soon,
+The Crestline team` },
+      { subj:"A story that proves the framework",
+        body:`Hi {{first_name}},
+
+Theory is useful. A real story is better.
+
+One of the operators we worked with came to us a few months before his company filed. We set a selling schedule, designed the tax piece early, and sized down his position calmly over the following year. No drama, no panic selling, no surprise tax bill.
+
+He kept what a lot of people in his position lose. The masterclass walks through the same framework we used: {{link}}
+
+Best,
+The Crestline team` },
+      { subj:"Last call — book a 15-minute slot",
+        body:`Hi {{first_name}},
+
+This is the last note I will send about the masterclass, so I wanted to make it easy.
+
+If you are anywhere near a liquidity event, 30 minutes now can save you a decision you cannot undo later. The Equity Exit Playbook is still free to watch here: {{link}}
+
+And if you would rather just talk it through, you can grab a 15-minute slot on my calendar. No pressure, no pitch. Just a clear next step.
+
+Whenever you are ready,
+The Crestline team` }
+    ];
+    const noEl = document.getElementById('email-no');
+    const subjEl = document.getElementById('email-subj');
+    const bodyEl = document.getElementById('email-body');
+    const tabs = Array.from(document.querySelectorAll('.etab'));
+    function showEmail(i){
+      const e = EMAILS[i];
+      noEl.textContent = 'EMAIL 0'+(i+1);
+      subjEl.textContent = e.subj;
+      bodyEl.textContent = e.body;
+      tabs.forEach((t,ti)=>t.classList.toggle('active', ti===i));
+    }
+    tabs.forEach((t,i)=>{
+      t.addEventListener('mouseenter', ()=>showEmail(i));
+      t.addEventListener('focus', ()=>showEmail(i));
+      t.addEventListener('click', ()=>showEmail(i));
+    });
+    showEmail(0);
+  </script>
+</body>
+</html>
