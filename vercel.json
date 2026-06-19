@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/:slug",
-      "destination": "/strategy-:slug.html"
+      "destination": "/strategy-:slug"
     }
   ],
   "redirects": [
