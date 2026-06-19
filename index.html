@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucerna — Strategy</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: #fff; margin-bottom: 1rem; }
+    .logo span { color: #3D7BFF; }
+    h1 { font-size: 1.25rem; font-weight: 500; color: #888; margin-bottom: 2rem; }
+    p { color: #666; font-size: 0.875rem; max-width: 400px; line-height: 1.6; }
+    .redirect-note { margin-top: 2rem; font-size: 0.75rem; color: #444; }
+  </style>
+</head>
+<body>
+  <div class="logo">Lucerna<span>.</span></div>
+  <h1>Content strategy platform</h1>
+  <p>Partner pages are accessible via direct link only.</p>
+  <p class="redirect-note">← <a href="https://lucernacollective.com" style="color: #3D7BFF; text-decoration: none;">lucernacollective.com</a></p>
+  <script>
+    // Client-side redirect as safety net
+    setTimeout(function() {
+      window.location.href = 'https://lucernacollective.com';
+    }, 5000);
+  </script>
+</body>
+</html>

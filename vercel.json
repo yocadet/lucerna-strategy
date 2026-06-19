@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/:slug",
+      "destination": "/strategy-:slug.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://lucernacollective.com",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

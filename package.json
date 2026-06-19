@@ -1,0 +1,10 @@
+{
+  "name": "lucerna-strategy",
+  "version": "1.0.0",
+  "description": "Lucerna Collective — Strategy Pages (client-facing D100 deliverables)",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site — no build required'",
+    "deploy": "vercel --prod"
+  }
+}
